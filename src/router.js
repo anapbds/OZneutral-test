@@ -17,7 +17,7 @@ router.get('/users', userController.list);
 router.post('/users', userController.create);
 
 // Edit user
-router.post('/users:id', userController.update);
+router.put('/users', userController.update);
 
 // Delete user
 router.delete('/users:id', userController.delete);

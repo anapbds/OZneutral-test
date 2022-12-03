@@ -21,11 +21,22 @@ class userController {
     }
 
     async update (ctx) {
-
+        let user = ctx.request.body;
+        openDb().then(db=>{
+            db.run('UPDATE User SET nome=?, idade=?, email=? WHERE id=?', [user.nome, user.idade, user.email, user.id]);
+        });
+        ctx.status = 200;
     }
 
     async delete (ctx) {
-
+       /* let id = req.body.id;
+        openDb().then(db=>{
+            db.get('DELETE FROM Pessoa WHERE id=?', [id])
+            .then(res=>res)
+        });
+        res.json({
+            "statusCode": 200
+        })*/
     }
 }
 
