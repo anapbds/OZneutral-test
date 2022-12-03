@@ -1,22 +1,23 @@
 const Router = require('koa-router');
 const router = new Router();
-
-const User = require('../models/User');
+const openDb = require ('../../config/configDB');
 
 class userController {
-    async create(ctx) {
-        const user = await User.create(ctx.body);
 
-        return ctx.json(user);
+    async create(ctx) {
+        let user = ctx.request.body;
+        openDb().then(db=>{
+            db.run('INSERT INTO User (nome, idade, email) VALUES (?,?,?)', [user.nome, user.idade, user.email]);
+        });
+        ctx.status = 200;
     }
 
     async list (ctx) {
-        //const users = await User.findAll();
-        //ctx.body = {total:0, count: 0, rows:[]}
-        //return ctx.json(users);
-        const { response } = ctx
-        response.status = 200;
-        response.body = {mesage: 'teste'};
+        /*openDb().then(db=>{
+            db.all('SELECT * FROM User')
+            .then(ctx.body = users[ctx.params.id])
+        });*/
+        ctx.status = 200;
     }
 
     async update (ctx) {
@@ -27,6 +28,5 @@ class userController {
 
     }
 }
-
 
 module.exports = new userController;
