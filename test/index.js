@@ -15,36 +15,19 @@ const chai = require('chai')
 const chaiHttp = require('chai-http');
 const chaiJson = require('chai-json-schema');
 
+const userSchema = require('../src/app/model/User');
+
 chai.use(chaiHttp);
 chai.use(chaiJson);
 
 const expect = chai.expect;
-
-//Define o minimo de campos que o usuário deve ter. Geralmente deve ser colocado em um arquivo separado
-const userSchema = {
-    title: "Schema do Usuario, define como é o usuario, linha 24 do teste",
-    type: "object",
-    required: ['nome', 'email', 'idade'],
-    properties: {
-        nome: {
-            type: 'string'
-        },
-        email: {
-            type: 'string'
-        },
-        idade: {
-            type: 'number',
-            minimum: 18
-        }
-    }
-}
 
 //Inicio dos testes
 
 //este teste é simplesmente pra enteder a usar o mocha/chai
 describe('Um simples conjunto de testes', function () {
     it('deveria retornar -1 quando o valor não esta presente', function () {
-        assert.equal([1, 2, 3].indexOf(4), -1);
+        assert.equal([1, 2, 3].indexOf(8), -1);
     });
 });
 
@@ -73,15 +56,66 @@ describe('Testes da aplicaçao',  () => {
 
     it('deveria criar o usuario raupp', function (done) {
         chai.request(app)
-        .post('/user')
-        .send({nome: "raupp", email: "jose.raupp@devoz.com.br", idade: 35})
+        .post('/users')
+        .send({nome: "raupp", idade: 35, email: "jose.raupp@devoz.com.br"})
         .end(function (err, res) {
             expect(err).to.be.null;
             expect(res).to.have.status(201);
             done();
         });
     });
-    //...adicionar pelo menos mais 5 usuarios. se adicionar usuario menor de idade, deve dar erro. Ps: não criar o usuario naoExiste
+
+    //menor de idade, dará erro 
+    it('deveria criar o usuario juninho', function (done) {
+        chai.request(app)
+        .post('/users')
+        .send({nome: "juninho", email: "juninhosilva@gmail.com", idade: 16})
+        .end(function (err, res) {
+            expect(err).to.be.null;
+            expect(res).to.have.status(201);
+            done();
+        });
+    });
+    it('deveria criar o usuario lucas', function (done) {
+        chai.request(app)
+        .post('/users')
+        .send({nome: "lucas", email: "lucas@gmail.com", idade: 23})
+        .end(function (err, res) {
+            expect(err).to.be.null;
+            expect(res).to.have.status(201);
+            done();
+        });
+    });
+    it('deveria criar o usuario alex', function (done) {
+        chai.request(app)
+        .post('/users')
+        .send({nome: "alex", email: "alex@gmail.com", idade: 29})
+        .end(function (err, res) {
+            expect(err).to.be.null;
+            expect(res).to.have.status(201);
+            done();
+        });
+    });
+    it('deveria criar o usuario andressa', function (done) {
+        chai.request(app)
+        .post('/users')
+        .send({nome: "andressa", email: "andressa@gmail.com", idade: 23})
+        .end(function (err, res) {
+            expect(err).to.be.null;
+            expect(res).to.have.status(201);
+            done();
+        });
+    });
+    it('deveria criar o usuario ana', function (done) {
+        chai.request(app)
+        .post('/users')
+        .send({nome: "ana", email: "anapbernardessilva@gmail.com", idade: 22})
+        .end(function (err, res) {
+            expect(err).to.be.null;
+            expect(res).to.have.status(201);
+            done();
+        });
+    });
 
     it('o usuario naoExiste não existe no sistema', function (done) {
         chai.request(app)

@@ -13,6 +13,9 @@ router.get('/', async (ctx) => {
 // List users
 router.get('/users', userController.list);
 
+// Get user
+router.get('/users/:name', userController.list);
+
 // Create user 
 router.post('/users', userController.create);
 
@@ -20,6 +23,6 @@ router.post('/users', userController.create);
 router.put('/users', userController.update);
 
 // Delete user
-router.delete('/users', userController.delete);
+router.delete('/users/:name', userController.delete);
 
 module.exports = router;

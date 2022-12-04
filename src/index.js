@@ -5,7 +5,6 @@
 //https://github.com/ZijianHe/koa-router
 
 // todas as configuraçoes devem ser passadas via environment variables
-//const configDB = require ('./config/configDB');
 const userController = require('./app/controllers/userController');
 const PORT = process.env.PORT || 3000;
 
